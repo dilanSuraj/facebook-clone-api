@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const usersRouter = require('./routes/users.routes');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
+const PORT = process.env.PORT || '8080'
 require('dotenv/config');
 
 const app = express();
@@ -61,7 +61,7 @@ mongoose.connect(process.env.DB_CONNECTION,
 /**
  * Start listening to the server
  */
-app.listen(3000);
+app.listen(PORT);
 
 
 
