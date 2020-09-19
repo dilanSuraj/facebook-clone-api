@@ -19,7 +19,9 @@ router.post('/',async (req, res) => {
     });
     
     if (user_existing.length !== 0) {
-        res.status(304).json("User exist");
+        res.status(304).json({
+            code: 304
+        });
     }
     else {
         user.save().then((data) => {
