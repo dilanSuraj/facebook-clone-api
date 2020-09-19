@@ -17,23 +17,15 @@ router.post('/',async (req, res) => {
     const user_existing = await UserModel.find({
         user_name: req.body.user_name
     });
-    if (user_existing !== null) {
-        res.json({
-            status: 304,
-            message: "User exist"
-        });
+    
+    if (user_existing.length !== 0) {
+        res.status(304).json("User exist");
     }
     else {
         user.save().then((data) => {
-            res.json({
-                status: 200,
-                message: data
-            });
+            res.status(201).json(data);
         }).catch(err => {
-            res.json({
-                status: err.code,
-                message: err
-            });
+            res.status(500).json("Server error");
             console.log(`Error : ${err}`);
         })
     }
@@ -48,13 +40,10 @@ router.get('/:username/:pw', async (req, res) => {
             user_name: req.params.username,
             hashed_password: req.params.pw
         });
-        res.json(user);
+        res.status(200).json(user);
     } catch (err) {
         console.log(err)
-        res.json({
-            status: err.code,
-            message: err
-        })
+        res.status(500).json("Server error");
     }
 })
 
