@@ -14,7 +14,15 @@ router.post('/', (req, res) => {
         gender: req.body.gender,
         birth_date: req.body.birth_date
     });
-
+    const user = await UserModel.find({
+        user_name: req.body.user_name
+    });
+    if(user !== null){
+        res.json({
+            status: 304,
+            message: "User exist"
+        });
+    }
     user.save().then((data) => {
         res.json({
             status: 200,
@@ -39,6 +47,7 @@ router.get('/:username/:pw', async (req, res) => {
         });
         res.json(user);
     } catch (err) {
+        console.log(err)
         res.json({
             status: err.code,
             message: err
